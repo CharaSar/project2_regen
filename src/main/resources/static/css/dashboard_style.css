@@ -70,16 +70,16 @@ select{
 }
 
 .dropdown-menu {
-    left: auto;
-    right: 0;
     margin-top: 4px;
 }
 
 input[type="text"]:disabled {
+    width: 100%;
     background: #e9ecef;
     border: 1px solid #ced4da;
 }
 
 input[type="text"] {
+    width: 100%;
     border: 1px solid #ced4da;
 }

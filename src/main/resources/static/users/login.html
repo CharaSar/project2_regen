@@ -17,6 +17,7 @@
 		<link href="../css/libraries/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
 		<!-- Javascript/js -->
+		<script src="../js/security/guest_auth.js"></script>
 		<script src="../js/libraries/jquery.min.js"></script>
 		<script src="../js/libraries/bootstrap.min.js"></script>
 		<script src="../js/login_form_validation.js"></script>
@@ -61,6 +62,8 @@
 			  document.getElementById("username").focus();
 			};
 
+
+
 			var passwordField = document.getElementById("password");
 			passwordField.addEventListener("keyup", function(event) {
 				event.preventDefault();
@@ -68,6 +71,6 @@
 					document.getElementById("loginBtn").click();
 				}
 			});
-		</script>
+		</script><!-- todo hit enter login!! -->
 	</body>
 </html>

@@ -43,12 +43,11 @@ public class CitizenController {
 
     @GetMapping("/api/citizen/specialties")
     public List<Specialty> getSpecialties(Authentication authentication) {
-        System.out.println("chara"+authentication.getAuthorities());
         return citizenService.getSpecialties();
     }
 
     @GetMapping("/api/citizen/doctor/{specialtyId}")
-    public List<Doctor> getDoctors(@PathVariable Long specialtyId) {
+    public List<Doctor> getDoctorsBySpecialtyId(@PathVariable Long specialtyId) {
         return citizenService.getDoctors(specialtyId);
     }
 

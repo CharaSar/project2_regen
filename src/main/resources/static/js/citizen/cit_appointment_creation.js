@@ -19,7 +19,7 @@ $(document).ready(function(){
              $("#appointmentTimeInput").prop('disabled', false);
              $("#appointmentIllnessHistoryInput").prop('disabled', false);
              $("#appointmentNotesInput").prop('disabled', false);
-              $.ajax({
+              $.ajax({//load doctors with specific specialty
                       "url" : ROOT_PATH + "/api/citizen/doctor/" + value,
                       "method" : "GET",
                       "contentType": "application/json",
@@ -81,7 +81,7 @@ $(document).ready(function(){
 
         if($("#appointmentDateInput").val() != ""&& $("#appointmentTimeInput").val() != "" && $("#doctor").val() > 0) {
             if(dateInput >= new Date()) {
-                $.ajax({
+                $.ajax({//create appointment
                         "url": ROOT_PATH + "/api/citizen/appointment",
                         "method": "POST",
                         "processData": false,
@@ -90,10 +90,10 @@ $(document).ready(function(){
                         "dataType": "json",
                         success: function(responseData, textStatus, jQxhr){
                             alert("Your appointment created successfully.")
+                            window.location.href = "cit_index.html";
                         },
                         error : function(xhr, options, error){
-                            console.log("error");
-                            console.log(error);
+                            alert(xhr.responseText);//todo to idio kai sta ypoloipa errors
                         }
                });
             } else{
