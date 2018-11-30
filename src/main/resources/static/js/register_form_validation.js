@@ -159,6 +159,14 @@ $(document).ready(function() {
 		if(error_fname || error_lname ||error_username ||error_password ||error_email||error_tel ||error_ssn){
 			//lathos
 			alert("Wrong input. Try again.");
+		}else if($("#fname").val() == "" ||
+                 $("#lname").val() == "" ||
+                 $("#username").val() == "" ||
+                 $("#password").val() == "" ||
+                 $("#email").val() == "" ||
+                 $("#tel").val() == "" ||
+                 $("#ssn").val() == ""){
+		    alert("All fields are required!");
 		} else {
             //ajax
                 var fd=new FormData();
@@ -219,10 +227,10 @@ $(document).ready(function() {
                                 });
                         },
                         statusCode: {
-                            409 : function() {
+                             409 : function(xhr, options, error) {
                                 $('#loading').html("");
-                                alert("One or more of your credentials (username, email, phone, SSN) already exist.");
-                                }
+                                alert(xhr.responseText);
+                             }
                         }
                     });
 

@@ -10,9 +10,12 @@ import org.regeneration.repositories.SpecialtyRepository;
 import org.regeneration.repositories.UserRepository;
 import org.regeneration.security.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -79,20 +82,18 @@ public class CitizenService {
     }
 
     @PreAuthorize("hasRole('CITIZEN')")
+    //@PostAuthorize("returnObject.citizen.user.username == authentication.principal.user.username") todo an mas erthei empneusi!!
     public Appointment getAppointmentById(@PathVariable Long id) {
         return appointmentRepository.findById(id)
                 .orElseThrow(() -> new AppointmentNotFoundException(id));
-
     }
-
 
     @PreAuthorize("hasRole('CITIZEN')")
     public void deleteAppointmentById(@PathVariable Long appointmentId) {
-
         getAppointmentById(appointmentId);
         appointmentRepository.deleteById(appointmentId);
-
     }
+
     @PreAuthorize("hasRole('CITIZEN')")
     public Appointment editAppointment(@RequestBody EditAppointmentDTO editAppointmentDTO, Principal principal) {
 
@@ -101,32 +102,37 @@ public class CitizenService {
                 .orElseThrow(() -> new DoctorNotFoundException(appointmentToEdit.getDoctor().getDoctorId()));
 
         User loggedInUser = userRepository.findByUsername(principal.getName());
-        if (loggedInUser.getRole() == Role.CITIZEN) {
-            Citizen citizen = loggedInUser.getCitizen();
+        Citizen citizen = loggedInUser.getCitizen();
 
-            for (Appointment doctorsAppointment : doctor.getAppointments()) {
-                if (doctorsAppointment.getAppointmentId() != appointmentToEdit.getAppointmentId()) {//apofeugw to na sygkrinw to idio rantevou
-                    if (doctorsAppointment.getDate().equals(appointmentToEdit.getDate()) && doctorsAppointment.getTime().equals(appointmentToEdit.getTime())) {
-                        throw new DoctorAppointmentConflictException();
-                    }
-                }
-            }
-            for (Appointment citizenAppointment : citizen.getAppointments()) {
-                if (citizenAppointment.getAppointmentId() != appointmentToEdit.getAppointmentId()) {//apofeugw to na sygkrinw to idio rantevou
-                    if (citizenAppointment.getDate().equals(appointmentToEdit.getDate()) && citizenAppointment.getTime().equals(appointmentToEdit.getTime())) {
-                        throw new CitizenAppointmentConflictException();
-                    }
-                }
-            }
-            appointmentToEdit.setDate(editAppointmentDTO.getDate());
-            appointmentToEdit.setTime(editAppointmentDTO.getTime());
-            appointmentToEdit.setIllnessHistory(editAppointmentDTO.getIllnessHistory());
-            appointmentToEdit.setNotes(editAppointmentDTO.getNotes());
+        LocalDateTime ldt = LocalDateTime.now();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String now = format.format(ldt);
 
-            appointmentRepository.save(appointmentToEdit);
-            return appointmentToEdit;
+        if (editAppointmentDTO.getDate().compareTo(now) < 0) {
+            throw new AppointmentInPastException();
         }
-        return null;
+
+        for (Appointment doctorsAppointment : doctor.getAppointments()) {
+            if (doctorsAppointment.getAppointmentId() != editAppointmentDTO.getAppointmentId()) {//apofeugw to na sygkrinw to idio rantevou
+                if (doctorsAppointment.getDate().equals(editAppointmentDTO.getDate()) && doctorsAppointment.getTime().equals(editAppointmentDTO.getTime())) {
+                    throw new DoctorAppointmentConflictException();
+                }
+            }
+        }
+        for (Appointment citizenAppointment : citizen.getAppointments()) {
+            if (citizenAppointment.getAppointmentId() != editAppointmentDTO.getAppointmentId()) {//apofeugw to na sygkrinw to idio rantevou
+                if (citizenAppointment.getDate().equals(editAppointmentDTO.getDate()) && citizenAppointment.getTime().equals(editAppointmentDTO.getTime())) {
+                    throw new CitizenAppointmentConflictException();
+                }
+            }
+        }
+        appointmentToEdit.setDate(editAppointmentDTO.getDate());
+        appointmentToEdit.setTime(editAppointmentDTO.getTime());
+        appointmentToEdit.setIllnessHistory(editAppointmentDTO.getIllnessHistory());
+        appointmentToEdit.setNotes(editAppointmentDTO.getNotes());
+
+        appointmentRepository.save(appointmentToEdit);
+        return appointmentToEdit;
     }
 
     @PreAuthorize("hasRole('CITIZEN')")

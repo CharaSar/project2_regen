@@ -28,14 +28,18 @@ $(document).ready(function() {
                   $('#email').html(citizen.email);
                   $('#phone').html(citizen.phone);
               },
-              error: function(xhr,resp,text){
-                  alert("Could not load patient's info.");
+              statusCode: {
+                   404 : function(xhr, options, error) {
+                       alert(xhr.responseText);
+                   }
               }
            });
        },
-       error: function(xhr,resp,text){
-           alert("Could not load appointment's info.");
-           history.go(-1);
+       statusCode: {
+            404 : function(xhr, options, error) {
+                alert(xhr.responseText);
+                history.go(-1);
+            }
        }
     });
 });

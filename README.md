@@ -23,43 +23,26 @@ static assets `/resources/static/` and provides the models, repos, controllers, 
 The project is capable of creating a MySQL database (defined in `application.properties`) and populate some sample data (`LoadDatabase.java`) the first time/every time it runs.
 
 
-
-
-
-
 ## Entities implementation
 
-We implement the entities `Doctor`, `Citizen`, `Appointment`, `Specialty` and `User` that represent the database tables and their fields.
+Implementing the entities `Doctor`, `Citizen`, `Appointment`, `Specialty` and `User` that represent the database tables and their fields.
 
 ## REST API Documentation
-//cotrollers
+
+Implementing the appropriate controllers (`CitizenController`, `DoctorController`, `LoggedInUserController`, `RegistrationController`), that define
+the methods that access the database to fulfill the requested function.
 
 ## Exceptions & Advices
-//exceptions advices
+
+Implementing the appropriate exceptions and advices that are throwed when a requested function does not respond with the correct result.
 
 ## Services
-//dto
+
+Implementing DTOs (`EditAppointmentDTO`, `NewAppointmentDTO`, `UserRegistrationDTO`) that help concentrate the needed information from various fields and pass them as arguments in the respected services that access the controllers.
 
 ## Repositories
 
-
-## Security
-
-
-
-
-
-
-
-
-
-
-We also implement the respective DTOs that help us collect data from various entities (`NewAppointmentDTO`, `EditAppointmentDTO` & `UserRegistrationDTO`).
-
-There is an implementation of the user page (`/pages/user/index.html`) that uses JQuery to retrieve Books
-and display them.
-
-The `BookController` implements a CRUD API that uses the `BookReppository` to manipulate data in the database.
+Implementing the respected repositories (`AppointmentRepository`, `CitizenRepository`, `DoctorRepository`, `SpecialtyRepository`, `UserRepository`) that implement the `JPARepository` and make the requested queries to the database through the CRUD API.
 
 ## Running the project
 
@@ -93,3 +76,8 @@ servlet that expires the session.
 
 Client side, a `sessionStorage` is used to hold the logged in username and the user's role. That's only there to avoid having
 to hit the server each time the front-end needs to know if a user is logged in. Upon logout the `username` and `user_role` is removed from storage.
+
+## Unit Tests
+
+Implementing unit tests (`CitizenControllerIT`, `DoctorControllerIT`) that check the controllers to see if the requested functions work as expected, individually.
+`SpringSecurityWebAuxTestConfig` tests the initial connection to the database to ensure that the rest unit tests have access.

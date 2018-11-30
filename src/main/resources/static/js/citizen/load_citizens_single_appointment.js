@@ -15,10 +15,14 @@ $(document).ready(function() {
            $('#illness').html(appointment.illnessHistory);
            $('#notes').html(appointment.notes);
        },
-       error: function(xhr,resp,text){
-           alert("Could not load appointment's info.");
-           history.go(-1);
+       statusCode: {
+            404 : function(xhr, options, error) {
+                alert(xhr.responseText);
+                history.go(-1);
+            }
        }
+
+
     });
 
     $("#deleteButton").on('click', function(){
@@ -29,8 +33,10 @@ $(document).ready(function() {
                 alert("Appointment deleted.");
                 window.location.href = "cit_index.html";
             },
-            error : function(xhr, options, error){
-                console.log(error);
+            statusCode: {
+                 404 : function(xhr, options, error) {
+                     alert(xhr.responseText);
+                 }
             }
          });
     });

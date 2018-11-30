@@ -40,7 +40,7 @@ function login(usernameElement,passwordElement) {
                 $('#loading').html("");
                 alert("Invalid username or password!");
                 }
-            }
+        }
 	});
 
 }

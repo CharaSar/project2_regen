@@ -15,9 +15,10 @@ $(document).ready(function() {
            $('#illness').attr("value", appointment.illnessHistory);
            $('#notes').attr("value", appointment.notes);
        },
-       error: function(xhr,resp,text){
-           alert("Could not load appointment's info.");
-           history.go(-2);
+       statusCode: {
+            404 : function(xhr, options, error) {
+                alert(xhr.responseText);
+            }
        }
     });
 
@@ -42,8 +43,16 @@ $(document).ready(function() {
                     alert("Changes saved successfully.");
                     window.location.href = "cit_single_appointment.html?appointment_id=" + vars["appointment_id"];
                 },
-                error : function(xhr, options, error){
-                    console.log(error);
+                statusCode: {
+                     400 : function(xhr, options, error) {
+                         alert(xhr.responseText);
+                     },
+                     404 : function(xhr, options, error) {
+                         alert(xhr.responseText);
+                     },
+                     409 : function(xhr, options, error) {
+                         alert(xhr.responseText);
+                     }
                 }
           });
     });

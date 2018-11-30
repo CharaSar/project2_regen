@@ -1,8 +1,5 @@
 package org.regeneration.controllers;
 
-import org.regeneration.models.Appointment;
-import org.regeneration.models.Citizen;
-import org.regeneration.models.Doctor;
 import org.regeneration.models.User;
 import org.regeneration.security.MyUserDetails;
 import org.regeneration.security.Role;
@@ -23,7 +20,7 @@ public class SpringSecurityWebAuxTestConfig {
         User doctorUser = new User("doc1", "doc1password", Role.DOCTOR);
         MyUserDetails myTestUserDetails1 = new MyUserDetails(doctorUser);
 
-        User citizenUser = new User("cit1", "cit1Password", Role.CITIZEN);
+        User citizenUser = new User("cit1", "cit1password", Role.CITIZEN);
         MyUserDetails myTestUserDetails2 = new MyUserDetails(citizenUser);
 
         return new InMemoryUserDetailsManager(Arrays.asList(

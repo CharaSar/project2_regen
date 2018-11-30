@@ -45,7 +45,7 @@
 						<input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
 						<p class="error_form" id="password_error_message"></p>
 						<pre id="loading" style="height:32px;"></pre>
-						<input type="button" class="fadeIn fourth" value="Login" onclick="login(username,password);">
+						<input type="button" id="loginBtn" class="fadeIn fourth" value="Login" onclick="login(username,password);">
 					</form>
 
 					<!-- Footer -->
@@ -62,8 +62,6 @@
 			  document.getElementById("username").focus();
 			};
 
-
-
 			var passwordField = document.getElementById("password");
 			passwordField.addEventListener("keyup", function(event) {
 				event.preventDefault();
@@ -71,6 +69,6 @@
 					document.getElementById("loginBtn").click();
 				}
 			});
-		</script><!-- todo hit enter login!! -->
+		</script>
 	</body>
 </html>

@@ -47,8 +47,10 @@ $(document).ready(function(){
                              );
                           });
                       },
-                      error: function(xhr,ajaxOptions,thrownError){
-                            alert("Error");
+                      statusCode: {
+                           404 : function(xhr, options, error) {
+                               alert(xhr.responseText);
+                           }
                       }
                  });
         }else{
@@ -70,10 +72,8 @@ $(document).ready(function(){
             'illnessHistory' : $("#appointmentIllnessHistoryInput").val(),
             'notes' : $("#appointmentNotesInput").val()
         };
-        console.log(object);
 
         var requestData = JSON.stringify(object);
-
 
         var selectedDate=$("#appointmentDateInput").val().split("-");
         var selectedTime=$("#appointmentTimeInput").val().split(":")
@@ -92,16 +92,23 @@ $(document).ready(function(){
                             alert("Your appointment created successfully.")
                             window.location.href = "cit_index.html";
                         },
-                        error : function(xhr, options, error){
-                            alert(xhr.responseText);//todo to idio kai sta ypoloipa errors
+                        statusCode: {
+                             400 : function(xhr, options, error) {
+                                 alert(xhr.responseText);
+                             },
+                             404 : function(xhr, options, error) {
+                                 alert(xhr.responseText);
+                             },
+                             409 : function(xhr, options, error) {
+                                 alert(xhr.responseText);
+                             }
                         }
                });
             } else{
-               alert("Enter a date in the future")
+               alert("Enter a date in the future.")
             }
         } else {
           alert("Please fill the fields date, time and doctor which are required!")
         }
-      });
-
     });
+});

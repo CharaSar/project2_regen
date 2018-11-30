@@ -48,7 +48,7 @@ public class DoctorService {
 
             Long docId = loggedInUser.getDoctor().getDoctorId();
 
-            List<Appointment> appointments = appointmentRepository.findAll();//new ArrayList();
+            List<Appointment> appointments = appointmentRepository.findAll();
             List<Appointment> response = new ArrayList<>();
 
             if (fromDate.equals("")) {
