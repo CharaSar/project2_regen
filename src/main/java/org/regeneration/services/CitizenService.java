@@ -11,6 +11,7 @@ import org.regeneration.repositories.UserRepository;
 import org.regeneration.security.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -82,7 +83,7 @@ public class CitizenService {
     }
 
     @PreAuthorize("hasRole('CITIZEN')")
-    //@PostAuthorize("returnObject.citizen.user.username == authentication.principal.user.username") todo an mas erthei empneusi!!
+    @PostAuthorize("returnObject.citizen.user.username == authentication.principal.username")
     public Appointment getAppointmentById(@PathVariable Long id) {
         return appointmentRepository.findById(id)
                 .orElseThrow(() -> new AppointmentNotFoundException(id));

@@ -11,6 +11,7 @@ import org.regeneration.repositories.DoctorRepository;
 import org.regeneration.repositories.UserRepository;
 import org.regeneration.security.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -92,6 +93,7 @@ public class DoctorService {
     }
 
     @PreAuthorize("hasRole('DOCTOR')")
+    @PostAuthorize("returnObject.doctor.user.username == authentication.principal.username")
     public Appointment doctorGetAppointment(@PathVariable Long id) {
         return appointmentRepository.findById(id)
                 .orElseThrow(() -> new AppointmentNotFoundException(id));
