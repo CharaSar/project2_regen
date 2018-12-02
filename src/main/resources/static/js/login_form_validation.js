@@ -3,8 +3,8 @@
              $("#username_error_message").hide();
              $("#password_error_message").hide();
 
-//             var error_username = false;
-//             var error_password = false;
+             var error_username = true;
+             var error_password = true;
 
              $("#username").focusout(function() {
                     check_username();
@@ -21,12 +21,12 @@
                     if(pattern.test(username) && username!=='') {
                         $("#username_error_message").hide();
                         $("#username").css("border-bottom","2px solid green");
-                      //  error_username=false;
+                        error_username=false;
                     } else{
                         $("#username_error_message").html("Should contain characters, numbers and special characters (_ and -)");
                         $("#username_error_message").show();
                         $("#username").css("border-bottom","2px solid red");
-                      //  error_username=true;
+                        error_username=true;
                     }
                 }
 
@@ -35,24 +35,29 @@
                     var pattern=/^[a-zA-Z0-9]{8,50}$/;
                     var password=String($("#password").val());
 
-                    if (pattern.test(password)) {
+                    if (pattern.test(password) && password!=='') {
                         $("#password_error_message").hide();
                         $("#password").css("border-bottom","2px solid green");
-                       // error_password=false;
+                        error_password=false;
                     } else{
                         $("#password_error_message").html(" Minimum eight characters and/or numbers");
                         $("#password_error_message").show();
                         $("#password").css("border-bottom","2px solid red");
-                       // error_password=true;
+                        error_password=true;
                     }
                 }
 
-//                 $("#loginBtn").click(function(e) {
-//                    if(error_username || error_password)
-//                    {
-//                        //e.preventDefault();
-//                        alert("Wrong input. Try again.");
-//                    }
-//                });
+                 $("#loginBtn").click(function() {
+                    if(error_username || error_password){
+                        //e.preventDefault();
+                        alert("Wrong input. Try again.");
+                    }else if($("#username").val() == "" ||
+                             $("#password").val() == ""){
+                        alert("All fields are required!");
+                     }else {
+                        login($("#username"),("#password"));
+
+                    }
+                });
 
       });
