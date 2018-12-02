@@ -1,6 +1,7 @@
-function login(usernameElement,passwordElement) {
-	let username = usernameElement && usernameElement.value ? usernameElement.value : "";
-	let password = passwordElement && passwordElement.value ? passwordElement.value : "";
+function login() {
+
+    let username = $("#username").val();
+    let password = $("#password").val();
 
 	var fd = new FormData();
 	fd.append( 'username', username);

@@ -49,13 +49,12 @@
 
                  $("#loginBtn").click(function() {
                     if(error_username || error_password){
-                        //e.preventDefault();
                         alert("Wrong input. Try again.");
                     }else if($("#username").val() == "" ||
                              $("#password").val() == ""){
                         alert("All fields are required!");
                      }else {
-                        login($("#username"),("#password"));
+                        login();
 
                     }
                 });
