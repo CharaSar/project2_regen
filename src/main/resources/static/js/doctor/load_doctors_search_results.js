@@ -38,7 +38,7 @@ $(document).ready(function() {
             });
         },
         error: function(xhr,resp,text){
-            alert("Could not load appointments.");
+            swal("Could not load appointments.");
         }
      });
 });

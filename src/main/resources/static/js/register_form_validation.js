@@ -158,7 +158,7 @@ $(document).ready(function() {
 	$("#registerButton").click(function() {
 		if(error_fname || error_lname ||error_username ||error_password ||error_email||error_tel ||error_ssn){
 			//lathos
-			alert("Wrong input. Try again.");
+			swal("Wrong input. Try again.");
 		}else if($("#fname").val() == "" ||
                  $("#lname").val() == "" ||
                  $("#username").val() == "" ||
@@ -166,7 +166,7 @@ $(document).ready(function() {
                  $("#email").val() == "" ||
                  $("#tel").val() == "" ||
                  $("#ssn").val() == ""){
-		    alert("All fields are required!");
+		    swal("All fields are required!");
 		} else {
             //ajax
                 var fd=new FormData();
@@ -195,41 +195,42 @@ $(document).ready(function() {
                             $('#loading').html("<img src='../images/loading.gif'/>");
                         },
                         success: function(responseData, textStatus, jQxhr){
-                            alert("Registration complete.");
+                            swal("Registration complete.")
+                            .then(() => {
+                               var loginfd = new FormData();
+                               loginfd.append( 'username', $("#username").val());
+                               loginfd.append( 'password', $("#password").val());
 
-                            var loginfd = new FormData();
-                            loginfd.append( 'username', $("#username").val());
-                            loginfd.append( 'password', $("#password").val());
 
-
-                            $.ajax({
-                                "url": ROOT_PATH + "/login",
-                                "data": loginfd,
-                                "processData": false,
-                                "contentType": false,
-                                "type": "POST",
-                                success: function(data){
-                                    sessionStorage.setItem(SESSION_STORAGE_LOGIN_TOKEN_NAME, responseData.user.username);
-                                    sessionStorage.setItem(SESSION_STORAGE_ROLE_NAME, responseData.user.role);//save user's role
-                                    $('#loading').html("");
-                                    if(responseData.user.role=="CITIZEN"){
-                                        window.location.replace(ROOT_PATH + "/users/citizen/index.html");
-                                    }else{
-                                        window.location.replace(ROOT_PATH + "/users/doctor/index.html");
-                                    }
-                                },
-                                statusCode: {
-                                    401 : function() {
-                                        $('#loading').html("");
-                                        alert("Invalid username or password!");
-                                        }
-                                    }
-                                });
+                               $.ajax({
+                                   "url": ROOT_PATH + "/login",
+                                   "data": loginfd,
+                                   "processData": false,
+                                   "contentType": false,
+                                   "type": "POST",
+                                   success: function(data){
+                                       sessionStorage.setItem(SESSION_STORAGE_LOGIN_TOKEN_NAME, responseData.user.username);
+                                       sessionStorage.setItem(SESSION_STORAGE_ROLE_NAME, responseData.user.role);//save user's role
+                                       $('#loading').html("");
+                                       if(responseData.user.role=="CITIZEN"){
+                                           window.location.replace(ROOT_PATH + "/users/citizen/index.html");
+                                       }else{
+                                           window.location.replace(ROOT_PATH + "/users/doctor/index.html");
+                                       }
+                                   },
+                                   statusCode: {
+                                       401 : function() {
+                                           $('#loading').html("");
+                                            swal("Invalid username or password!");
+                                           }
+                                       }
+                                   });
+                            });
                         },
                         statusCode: {
                              409 : function(xhr, options, error) {
                                 $('#loading').html("");
-                                alert(xhr.responseText);
+                                swal(xhr.responseText);
                              }
                         }
                     });

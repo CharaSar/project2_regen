@@ -17,8 +17,10 @@ $(document).ready(function() {
        },
        statusCode: {
             404 : function(xhr, options, error) {
-                alert(xhr.responseText);
-                history.go(-1);
+                swal(xhr.responseText)
+                    .then((value) => {
+                    history.go(-1);
+                });
             }
        }
 
@@ -30,12 +32,14 @@ $(document).ready(function() {
             "url": ROOT_PATH + "/api/citizen/appointment/" + vars["appointment_id"],
             "method": "DELETE",
             success: function(responseData, textStatus, jQxhr){
-                alert("Appointment deleted.");
-                window.location.href = "cit_index.html";
+                  swal("Appointment deleted.")
+                    .then((value) => {
+                    window.location.href = "cit_index.html";
+                  });
             },
             statusCode: {
                  404 : function(xhr, options, error) {
-                     alert(xhr.responseText);
+                     swal(xhr.responseText);
                  }
             }
          });

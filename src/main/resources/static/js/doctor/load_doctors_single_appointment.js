@@ -30,15 +30,17 @@ $(document).ready(function() {
               },
               statusCode: {
                    404 : function(xhr, options, error) {
-                       alert(xhr.responseText);
+                       swal(xhr.responseText);
                    }
               }
            });
        },
        statusCode: {
             404 : function(xhr, options, error) {
-                alert(xhr.responseText);
-                history.go(-1);
+                swal(xhr.responseText)
+                	.then((value) => {
+                	history.go(-1);
+                });
             }
        }
     });

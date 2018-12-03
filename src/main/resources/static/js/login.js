@@ -39,8 +39,8 @@ function login() {
         statusCode: {
             401 : function() {
                 $('#loading').html("");
-                alert("Invalid username or password!");
-                }
+                swal("Invalid username or password!");
+            }
         }
 	});
 

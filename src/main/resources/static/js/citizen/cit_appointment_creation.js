@@ -49,7 +49,7 @@ $(document).ready(function(){
                       },
                       statusCode: {
                            404 : function(xhr, options, error) {
-                               alert(xhr.responseText);
+                               swal(xhr.responseText);
                            }
                       }
                  });
@@ -89,26 +89,29 @@ $(document).ready(function(){
                         "contentType": "application/json",
                         "dataType": "json",
                         success: function(responseData, textStatus, jQxhr){
-                            alert("Your appointment created successfully.")
-                            window.location.href = "cit_index.html";
+                            swal("Your appointment created successfully.")
+                            .then(() => {
+                                window.location.href = "cit_index.html";
+                            });
+
                         },
                         statusCode: {
                              400 : function(xhr, options, error) {
-                                 alert(xhr.responseText);
+                                 swal(xhr.responseText);
                              },
                              404 : function(xhr, options, error) {
-                                 alert(xhr.responseText);
+                                 swal(xhr.responseText);
                              },
                              409 : function(xhr, options, error) {
-                                 alert(xhr.responseText);
+                                 swal(xhr.responseText);
                              }
                         }
                });
             } else{
-               alert("Enter a date in the future.")
+               swal("Enter a date in the future.");
             }
         } else {
-          alert("Please fill the fields date, time and doctor which are required!")
+          swal("Please fill the fields date, time and doctor which are required!");
         }
     });
 });

@@ -17,7 +17,7 @@ $(document).ready(function() {
        },
        statusCode: {
             404 : function(xhr, options, error) {
-                alert(xhr.responseText);
+                 swal(xhr.responseText);
             }
        }
     });
@@ -40,18 +40,20 @@ $(document).ready(function() {
                 "contentType": "application/json",
                 "dataType": "json",
                 success: function(responseData, textStatus, jQxhr){
-                    alert("Changes saved successfully.");
-                    window.location.href = "cit_single_appointment.html?appointment_id=" + vars["appointment_id"];
+                    swal("Changes saved successfully.")
+                    .then(() => {
+                       window.location.href = "cit_single_appointment.html?appointment_id=" + vars["appointment_id"];
+                    });
                 },
                 statusCode: {
                      400 : function(xhr, options, error) {
-                         alert(xhr.responseText);
+                         swal(xhr.responseText);
                      },
                      404 : function(xhr, options, error) {
-                         alert(xhr.responseText);
+                         swal(xhr.responseText);
                      },
                      409 : function(xhr, options, error) {
-                         alert(xhr.responseText);
+                         swal(xhr.responseText);
                      }
                 }
           });

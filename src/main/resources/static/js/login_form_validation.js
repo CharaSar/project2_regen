@@ -35,7 +35,7 @@
                     var pattern=/^[a-zA-Z0-9]{8,50}$/;
                     var password=String($("#password").val());
 
-                    if (pattern.test(password) && password!=='') {
+                    if (pattern.test(password)) {
                         $("#password_error_message").hide();
                         $("#password").css("border-bottom","2px solid green");
                         error_password=false;
@@ -49,10 +49,10 @@
 
                  $("#loginBtn").click(function() {
                     if(error_username || error_password){
-                        alert("Wrong input. Try again.");
+                        swal("Wrong input. Try again.");
                     }else if($("#username").val() == "" ||
                              $("#password").val() == ""){
-                        alert("All fields are required!");
+                        swal("All fields are required!");
                      }else {
                         login();
 
